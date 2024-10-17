@@ -49,11 +49,41 @@ async function mostrarPokemones(apiManager) {
   }
 }
 
-//DEFINIR FUNCIÓN PARA OBTENER DETALLE DE POKEMONES
+//Más de pokemones
 async function handleMasInfo(url) {
-  //A cual URL realizar la petición?
-  // Realizar la petición
-  // Imprimir en consola en resultado
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("No se pudo obtener");
+    }
+    const detalles = await response.json();
+    //console.log(detalles);
+
+    const fila = document.getElementById("row");
+    fila.innerHTML = "";
+
+    const div = document.createElement("div");
+    div.className = "polaroid";
+
+    const img = document.createElement("img");
+    img.src = `${detalles.sprites.back_shiny}`;
+
+    div.appendChild(img);
+    fila.appendChild(div);
+    // detalles.abilities.forEach((habilidad) => {
+    //   console.log(habilidad.ability.name);
+    //   const p = document.createElement("p");
+    //   p.innerHTML = `Habilidad: ${habilidad.ability.name}`;
+
+    //   div.appendChild(p);
+    //   fila.appendChild(div);
+    // });
+
+    // Mostrar en pantalla
+  } catch (error) {
+    console.error("Error al obtener los datos:", error);
+    return {};
+  }
 }
 
 window.onload = () => {
